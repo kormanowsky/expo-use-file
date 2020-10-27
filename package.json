@@ -1,9 +1,17 @@
 {
+  "name": "use-file",
+  "version": "1.0.0",
+  "description": "A collection of hooks for syncing data with files in expo apps.",
   "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Mikhail Kormanovskii",
+  "license": "ISC",
   "dependencies": {
     "expo-file-system": "~9.2.0",
     "react": "16.13.1",
     "react-native": "https://github.com/expo/react-native/archive/sdk-39.0.4.tar.gz",
     "use-global-hook": "^0.2.1"
-  },
+  }
 }
