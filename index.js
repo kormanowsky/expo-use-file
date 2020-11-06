@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import * as FileSystem from "expo-file-system";
 import globalHook from "use-global-hook";
 
@@ -7,8 +7,9 @@ const useGlobalState = globalHook(
   { files: {} },
   {
     setFile: (store, file) => {
+      console.log(file);
       store.setState({
-        files: Object.assign(store.files, { [file.name]: file.contents }),
+        files: Object.assign(store.state.files, { [file.name]: file.contents }),
       });
     },
   }
@@ -16,9 +17,9 @@ const useGlobalState = globalHook(
 
 function useFile(fileName) {
   const [globalState, globalActions] = useGlobalState(),
-    fileContents = (globalState[fileName] || {}).contents,
+    fileContents = (globalState.files[fileName] || {}).contents || null,
     setFileContents = (contents) =>
-      globalActions.setFile({ name: fileName, contents });
+      {globalActions.setFile({ name: fileName, contents })};
 
   function load() {
     return new Promise((resolve, reject) => {
@@ -41,12 +42,12 @@ function useFile(fileName) {
           setFileContents(newContents);
           resolve(newContents);
         })
-        .catch(reject);
+        .catch(() => reject());
     });
   }
 
   useEffect(() => {
-    if (fileContents === null) {
+    if (!fileContents) {
       load();
     }
   }, []);
@@ -60,7 +61,7 @@ function useJSONFile(fileName) {
   function loadJSON() {
     return new Promise((resolve, reject) => {
       load()
-        .then((json) => resolve(JSON.parse(json)))
+        .then((json) => resolve(JSON.parse(json || null)))
         .catch(reject);
     });
   }
