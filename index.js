@@ -4,18 +4,21 @@ import globalHook from "use-global-hook";
 
 const useGlobalState = globalHook(
   React,
-  { contents: null },
+  { files: {} },
   {
-    setContents: (store, contents) => {
-      store.setState({ contents });
+    setFile: (store, file) => {
+      store.setState({
+        files: Object.assign(store.files, { [file.name]: file.contents }),
+      });
     },
   }
 );
 
 function useFile(fileName) {
   const [globalState, globalActions] = useGlobalState(),
-    fileContents = globalState.contents,
-    setFileContents = globalActions.setContents;
+    fileContents = (globalState[fileName] || {}).contents,
+    setFileContents = (contents) =>
+      globalActions.setFile({ name: fileName, contents });
 
   function load() {
     return new Promise((resolve, reject) => {
