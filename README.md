@@ -11,6 +11,7 @@ It's the same as `useFile()` but handles JSON conversion by itself and returns o
 
 # Version History 
 - v1.0.0 - Initial Release 
-- v1.1.0 - Fix bug when woring with several files
+- v1.1.0 - Fix bug when working with several files
 - v1.1.1 - Bugfix
 - v1.1.2 - Bugfix
+- v1.1.3 - Bugfix
