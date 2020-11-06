@@ -7,7 +7,6 @@ const useGlobalState = globalHook(
   { files: {} },
   {
     setFile: (store, { name, contents }) => {
-      console.log(file);
       store.setState({
         files: Object.assign(store.state.files, { [name]: contents }),
       });
